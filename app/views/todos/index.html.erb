@@ -39,11 +39,11 @@
       <li>
         <div><%= a_todo.content %></div>
 
-        <small>added <%= time_ago_in_words(a_todo.created_at) %> ago
+        <small>Added <%= time_ago_in_words(a_todo.created_at) %> ago
 
         <a href="/delete_todo/<%= a_todo.id %>">Delete</a></small>
         
-        <form action="/modify_todo/<%a_todo.id%>" method="post">
+        <form action="/modify_todo/<%=a_todo.id%>" method="post">
         <input type="hidden" name="query_status" value="in_progress">
         <button>Move to In Progress</button>
         </form>
@@ -62,7 +62,7 @@
       <li>
         <div><%= a_todo.content %></div>
 
-        <small>started <%= time_ago_in_words(a_todo.created_at) %> 
+        <small>Started <%= time_ago_in_words(a_todo.updated_at) %> ago
         
           <a href="/delete_todo/<%= a_todo.id%>">Delete</a>
         </small>
@@ -86,7 +86,7 @@
         <div><%= a_todo.content %></div>
 
         <small>
-          Completed <%= time_ago_in_words(a_todo.created_at) %>
+          Completed at <%= a_todo.updated_at.strftime("%l:%M%P on %d-%b-%Y ") %>
 
           <a href="/delete_todo/<%= a_todo.id %>">Delete</a>
         </small>        
