@@ -2,7 +2,7 @@
       |
       <a href="/edit_user_profile">Edit profile</a>
       |
-      <a href="/user_sign_out">Sign out</a>
+      <a href="/user_sign_in">Sign out</a>
 
 
 <div>
@@ -37,10 +37,10 @@
   </div>
 </div>
 
-<div class="next_up">
+<div class="next_up" style="color: darkorange;">
   <h2>Next Up</h2>
 
-  <% @list_of_todos.each do |a_todo| %>
+  <% @list_of_next_up.each do |a_todo| %>
 
     <ul>
       <li>
@@ -50,7 +50,7 @@
 
         <a href="/delete_todo/<%= a_todo.id %>">Delete</a></small>
         
-        <form action="/modify_todo/:path_id" method="post">
+        <form action="/modify_todo/<%a_todo.id%>" method="post">
         <input type="hidden" name="query_status" value="in_progress">
         <button>Move to In Progress</button>
         </form>
@@ -59,22 +59,22 @@
   <% end %>
 </div>
 
-<div class="in_progress">
+<div class="in_progress" style="color: darkgreen;">
 
   <h2>In Progress</h2>
 
-  <% @list_of_todos.each do |a_todo_progress| %>
+  <% @list_of_todos_progress.each do |a_todo| %>
 
   <ul>
       <li>
-        <div><%= a_todo_progress.content %></div>
+        <div><%= a_todo.content %></div>
 
-        <small>started <%= time_ago_in_words(a_todo_progress.created_at) %> 
+        <small>started <%= time_ago_in_words(a_todo.created_at) %> 
         
-          <a href="/delete_todo/<%= a_todo_progress.id%>">Delete</a>
+          <a href="/delete_todo/<%= a_todo.id%>">Delete</a>
         </small>
 
-        <form action="/modify_todo/<%= a_todo_progress.id%>" method="post">
+        <form action="/modify_todo/<%= a_todo.id%>" method="post">
           <input type="hidden" name="query_status" value="done">
           <button>Move to Done</button>
         </form>
@@ -87,7 +87,7 @@
 
   <h2>Done</h2>
 
-  <% @list_of_todos.each do |a_todo| %>
+  <% @done.each do |a_todo| %>
   <ul>
       <li>
         <div><%= a_todo.content %></div>
@@ -99,5 +99,5 @@
         </small>        
       </li>
   </ul>
-  <% end %>
+  <% end%>
 </div>

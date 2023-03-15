@@ -3,6 +3,9 @@ class TodosController < ApplicationController
     matching_todos = Todo.all
 
     @list_of_todos = matching_todos.order({ :created_at => :desc })
+    @list_of_next_up = matching_todos.where({ :status => "next_up" })
+    @list_of_todos_progress = matching_todos.where({ :status => "in_progress" })
+    @done = matching_todos.where({ :status => "done" })
 
     render({ :template => "todos/index.html.erb" })
   end
@@ -20,8 +23,8 @@ class TodosController < ApplicationController
   def create
     the_todo = Todo.new
     the_todo.content = params.fetch("query_content")
-    #the_todo.status = params.fetch("query_status")
-    #the_todo.user_id = params.fetch("query_user_id")
+    the_todo.status = "next_up"
+    the_todo.user_id = session.fetch(:user_id)
 
     if the_todo.valid?
       the_todo.save
@@ -35,9 +38,8 @@ class TodosController < ApplicationController
     the_id = params.fetch("path_id")
     the_todo = Todo.where({ :id => the_id }).at(0)
 
-    the_todo.content = params.fetch("query_content")
     the_todo.status = params.fetch("query_status")
-    the_todo.user_id = params.fetch("query_user_id")
+    the_todo.user_id = session.fetch(:user_id)
 
     if the_todo.valid?
       the_todo.save
